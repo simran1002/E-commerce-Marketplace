@@ -1,0 +1,661 @@
+{
+	"info": {
+		"_postman_id": "a9fca7a5-62a5-4b68-bd1f-7e1f9c313dbf",
+		"name": "E-commerce Marketplace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24106690"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Rani\",\r\n    \"password\": \"Ran10\",\r\n    \"type\": \"seller\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Simran Yadav\",\r\n    \"password\": \"Sim10\",\r\n    \"type\": \"buyer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "42"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2a-nMoFx54+czTntmSLXl3mqIsZV4A\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 13:37:31 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User registered successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Simran Yadav\",\r\n    \"password\": \"Sim10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Simran Yadav\",\r\n    \"password\": \"Sim10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "184"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b8-fFpstQxPs7G77X53Xmzlx+Vn3fU\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 13:39:04 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiU2ltcmFuIFlhZGF2IiwidHlwZSI6ImJ1eWVyIn0sImlhdCI6MTcwMjU2MTE0NH0.y2qjx9bklyFT0Z_5MVKOSHQBtjhvc2qlkXtHJLvLWSk\"\n}"
+				}
+			]
+		},
+		{
+			"name": "list of all sellers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiU2ltcmFuIFlhZGF2IiwidHlwZSI6ImJ1eWVyIn0sImlhdCI6MTcwMjU3MTg2N30.JRp2ArrKPo5Ku1S2hfA5hVz5mzNM57nNZU7MDHGwad4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/buyer/list-of-sellers",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"buyer",
+						"list-of-sellers"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "list of all sellers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/buyer/list-of-sellers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"buyer",
+								"list-of-sellers"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "412"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"19c-RwECjxpmrgPsFqhrJ6+a3XZ8bn4\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 16:38:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"657b0766d103e2ce39703df0\",\n        \"username\": \"Prakhar Maheshwari\",\n        \"password\": \"Pra10\",\n        \"type\": \"seller\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"657b1b9dd9004872bb4fb30c\",\n        \"username\": \"Aman Yadav\",\n        \"password\": \"Ama10\",\n        \"type\": \"seller\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"657b2e4cb53dbc4f45f36fcd\",\n        \"username\": \"Sneha Gupta\",\n        \"password\": \"Sne10\",\n        \"type\": \"seller\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"657b2e59b53dbc4f45f36fcf\",\n        \"username\": \"Rani\",\n        \"password\": \"Ran10\",\n        \"type\": \"seller\",\n        \"__v\": 0\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "catalog of all sellers by seller_id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiU2ltcmFuIFlhZGF2IiwidHlwZSI6ImJ1eWVyIn0sImlhdCI6MTcwMjU3MTg2N30.JRp2ArrKPo5Ku1S2hfA5hVz5mzNM57nNZU7MDHGwad4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/buyer/seller-catalog/Aman Yadav",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"buyer",
+						"seller-catalog",
+						"Aman Yadav"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "catalog of all sellers by seller_id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/buyer/seller-catalog/Aman Yadav",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"buyer",
+								"seller-catalog",
+								"Aman Yadav"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "124"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7c-Kmtz+OCca+qiHnqHbfLV5f/UU1Y\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 16:47:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"name\": \"apple\",\n        \"price\": 10,\n        \"_id\": \"657b1c17cb842e2be61ff9f5\"\n    },\n    {\n        \"name\": \"toffee\",\n        \"price\": 20,\n        \"_id\": \"657b1c17cb842e2be61ff9f6\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "list of items to create an order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiU2ltcmFuIFlhZGF2IiwidHlwZSI6ImJ1eWVyIn0sImlhdCI6MTcwMjU3MTg2N30.JRp2ArrKPo5Ku1S2hfA5hVz5mzNM57nNZU7MDHGwad4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"products\": [\r\n    {\"name\": \"Pen\", \"price\": 5}\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/buyer/create-order/Rani",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"buyer",
+						"create-order",
+						"Rani"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "list of items to create an order",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    {\"name\": \"Pen\", \"price\": 5}\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/buyer/create-order/Rani",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"buyer",
+								"create-order",
+								"Rani"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"28-Ksy0pXcKy6Y7ZwUi6VioR2ymG2c\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 17:25:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Order created successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "list of items to create a catalog for a seller",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiUmFuaSIsInR5cGUiOiJzZWxsZXIifSwiaWF0IjoxNzAyNTcyNzM4fQ.xk2QTzDlIM9dD8zefPjMQkLZi1Tr6wgUGYUS4cJGkns",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"products\": [\r\n    {\"name\": \"Apple\", \"price\": 10},\r\n    {\"name\": \"Toffee\", \"price\": 20},\r\n    {\"name\": \"Pen\", \"price\": 5}\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/seller/create-catalog",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"seller",
+						"create-catalog"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "list of items to create a catalog for a seller",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    {\"name\": \"apple\", \"price\": 10},\r\n    {\"name\": \"toffee\", \"price\": 20},\r\n    {\"name\": \"Pen\", \"price\": 5}\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/seller/create-catalog",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"seller",
+								"create-catalog"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "254"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"fe-aPGbFouZsSjuq5hJZLZHKjnDglg\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 16:58:45 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"sellerId\": \"Rani\",\n    \"products\": [\n        {\n            \"name\": \"apple\",\n            \"price\": 10,\n            \"_id\": \"657b3445b752922299433f2b\"\n        },\n        {\n            \"name\": \"toffee\",\n            \"price\": 20,\n            \"_id\": \"657b3445b752922299433f2c\"\n        },\n        {\n            \"name\": \"Pen\",\n            \"price\": 5,\n            \"_id\": \"657b3445b752922299433f2d\"\n        }\n    ],\n    \"_id\": \"657b3445b752922299433f2a\",\n    \"__v\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "list of orders received by a seller",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiUmFuaSIsInR5cGUiOiJzZWxsZXIifSwiaWF0IjoxNzAyNTcyNzM4fQ.xk2QTzDlIM9dD8zefPjMQkLZi1Tr6wgUGYUS4cJGkns",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/seller/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"seller",
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "list of orders received by a seller",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/seller/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"seller",
+								"orders"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "158"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"9e-ODR7gU5c8Rd+iexJuqn5SqfLCmY\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 14 Dec 2023 17:01:38 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"657b34edb752922299433f34\",\n        \"buyerId\": \"Simran Yadav\",\n        \"sellerId\": \"Rani\",\n        \"products\": [\n            {\n                \"name\": \"Pen\",\n                \"price\": 5,\n                \"_id\": \"657b34edb752922299433f35\"\n            }\n        ],\n        \"__v\": 0\n    }\n]"
+				}
+			]
+		}
+	]
+}
