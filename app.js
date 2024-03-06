@@ -6,6 +6,11 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { connectDB } = require("./db/connection");
 const { User, Catalog, Order } = require("./src/models/schema");
+const axios = require('axios');
+const axiosConfig = {
+  httpsAgent: { rejectUnauthorized: false }, // Configure the HTTPS agent globally for Axios
+};
+const axiosInstance = axios.create(axiosConfig);
 
 const app = express();
 const PORT = 3000;
@@ -41,8 +46,8 @@ app.use(errorHandler);
 // Auth APIs
 app.post('/api/auth/register', async (req, res, next) => {
   try {
-    const { username, password, type } = req.body;
-    const user = new User({ username, password, type });
+    const { username, email, password, phoneNumber, address, type } = req.body;
+    const user = new User({ username, email, password, phoneNumber, address, type });
     await user.save();
     res.json({ message: 'User registered successfully' });
   } catch (error) {
@@ -81,7 +86,7 @@ app.get('/api/buyer/list-of-sellers', authenticateUser, async (req, res, next) =
   }
 });
 
-app.get('/api/buyer/seller-catalog/:seller_id', authenticateUser, async (req, res, next) => {
+app.get('/api/buyer/seller-catalog/:seller_id',  async (req, res, next) => {
   try {
     // Ensure that the authenticated user is a buyer
     if (req.user.type !== 'buyer') {
@@ -173,6 +178,60 @@ app.get('/api/seller/orders', authenticateUser, async (req, res, next) => {
     next(error);
   }
 });
+
+
+app.post('/api/get-coordinates', authenticateUser, async (req, res, next) => {
+  try {
+    // Ensure that the authenticated user is a buyer or seller
+    if (req.user.type !== 'buyer' && req.user.type !== 'seller') {
+      return res.status(403).json({ message: 'Forbidden: Only authenticated users can access this endpoint' });
+    }
+
+    const address = req.body.address;
+
+    // Make a request to the OpenStreetMap Nominatim API for geocoding using axiosInstance
+    const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+    
+    const response = await axiosInstance.get(apiUrl);
+
+    if (response.data && response.data.length > 0) {
+      const { lat, lon } = response.data[0];
+      res.json({ coordinates: { lat, lon } });
+    } else {
+      res.status(404).json({ message: 'Coordinates not found for the given address' });
+    }
+  } catch (error) {
+    console.error('Geocoding Error:', error.message);
+    console.log(error.stack);
+    res.status(500).json({ message: 'Internal server error during geocoding' });
+  }
+});
+
+
+// Assuming your coordinate JSON looks like: { "coordinates": [{ "lat": 12.34, "lon": 56.78 }, ...] }
+app.post('/api/array', authenticateUser, (req, res, next) => {
+  try {
+    // Ensure that the authenticated user is a buyer or seller
+    if (!req.user || (req.user.type !== 'buyer' && req.user.type !== 'seller')) {
+      return res.status(403).json({ message: 'Forbidden: Only authenticated users can access this endpoint' });
+    }
+
+    const { coordinates } = req.body;
+
+    if (!Array.isArray(coordinates)) {
+      return res.status(400).json({ message: 'Invalid coordinates format' });
+    }
+
+    // You can now use the 'coordinates' array in your server logic
+
+    res.json({ receivedCoordinates: coordinates });
+  } catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 
 app.listen(PORT, () => {
