@@ -29,12 +29,12 @@ const orderSchema = new mongoose.Schema({
 
 
 const coordinateSchema = new mongoose.Schema({
-  lat: { type: String, required: true },
-  lon: { type: String, required: true },
+  lat: { type: Number, required: true },
+  lon: { type: Number, required: true },
   foodOrders: [
     {
       itemName: { type: String, required: true },
-      quantity: { type: String, default: 1 },
+      quantity: { type: Number, default: 1 },
     }
   ]
 });

@@ -180,33 +180,8 @@ app.get('/api/seller/orders', authenticateUser, async (req, res, next) => {
 });
 
 
-app.post('/api/get-coordinates', async (req, res, next) => {
-  try {
-    // Ensure that the authenticated user is a buyer or seller
-    if (req.user.type !== 'buyer' && req.user.type !== 'seller') {
-      return res.status(403).json({ message: 'Forbidden: Only authenticated users can access this endpoint' });
-    }
-
-    const address = req.body.address;
-
-    // Make a request to the OpenStreetMap Nominatim API for geocoding using axiosInstance
-    const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
-    
-    const response = await axiosInstance.get(apiUrl);
-
-    if (response.data && response.data.length > 0) {
-      const { lat, lon } = response.data[0];
-      res.json({ coordinates: { lat, lon } });
-    } else {
-      res.status(404).json({ message: 'Coordinates not found for the given address' });
-    }
-  } catch (error) {
-    console.error('Geocoding Error:', error.message);
-    console.log(error.stack);
-    res.status(500).json({ message: 'Internal server error during geocoding' });
-  }
-});
-
+var meanLatitude;
+var meanLongitude;
 
 app.post('/api/array', async (req, res, next) => {
   try {
@@ -223,7 +198,12 @@ app.post('/api/array', async (req, res, next) => {
     try {
       // Use insertMany without a callback (returns a promise)
       await Coordinate.insertMany(coordinatesArray);
-      res.json({ message: 'Coordinates added successfully' });
+
+      // Calculate the mean value for latitudes and longitudes
+      meanLatitude = coordinatesArray.reduce((sum, coord) => sum + coord.lat, 0) / coordinatesArray.length;
+      meanLongitude = coordinatesArray.reduce((sum, coord) => sum + coord.lon, 0) / coordinatesArray.length;
+
+      res.json({ message: 'Coordinates added successfully', meanLatitude, meanLongitude });
     } catch (error) {
       console.error('Error saving coordinates:', error.message);
       res.status(500).json({ message: 'Internal server error' });
@@ -234,7 +214,28 @@ app.post('/api/array', async (req, res, next) => {
   }
 });
 
+app.get('/api/mean-coordinates', async (req, res) => {
+  try {
+    // Use MongoDB aggregation to calculate the mean
+    const result = await Coordinate.aggregate([
+      {
+        $group: {
+          _id: null,
+          meanLat: { $avg: '$lat' },
+          meanLon: { $avg: '$lon' },
+        },
+      },
+    ]);
 
+    // Extract meanLat and meanLon from the result
+    const { meanLat, meanLon } = result[0];
+
+    res.json({ meanLat, meanLon });
+  } catch (error) {
+    console.error('Error calculating mean coordinates:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 app.listen(PORT, () => {
