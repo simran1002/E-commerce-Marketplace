@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { connectDB } = require("./db/connection");
-const { User, Catalog, Order } = require("./src/models/schema");
+const { User, Catalog, Order,Coordinate } = require("./src/models/schema");
 const axios = require('axios');
 const axiosConfig = {
   httpsAgent: { rejectUnauthorized: false }, // Configure the HTTPS agent globally for Axios
@@ -208,14 +208,8 @@ app.post('/api/get-coordinates', async (req, res, next) => {
 });
 
 
-
-app.post('/api/array', (req, res, next) => {
+app.post('/api/array', async (req, res, next) => {
   try {
-    // Ensure that the authenticated user is a buyer or seller
-    if (!req.user || (req.user.type !== 'buyer' && req.user.type !== 'seller')) {
-      return res.status(403).json({ message: 'Forbidden: Only authenticated users can access this endpoint' });
-    }
-
     const { coordinates } = req.body;
 
     if (!Array.isArray(coordinates)) {
@@ -225,20 +219,21 @@ app.post('/api/array', (req, res, next) => {
     // Create an array of Coordinate model instances
     const coordinatesArray = coordinates.map(coord => new Coordinate({ ...coord, item: coord.item || '' }));
 
-    // Save the coordinates to the database
-    Coordinate.insertMany(coordinatesArray, (err) => {
-      if (err) {
-        console.error('Error saving coordinates:', err.message);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-
+    // Use try-catch block to handle potential errors
+    try {
+      // Use insertMany without a callback (returns a promise)
+      await Coordinate.insertMany(coordinatesArray);
       res.json({ message: 'Coordinates added successfully' });
-    });
+    } catch (error) {
+      console.error('Error saving coordinates:', error.message);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   } catch (error) {
     console.error('Error:', error.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 
 
