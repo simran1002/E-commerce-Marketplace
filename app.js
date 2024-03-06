@@ -180,7 +180,7 @@ app.get('/api/seller/orders', authenticateUser, async (req, res, next) => {
 });
 
 
-app.post('/api/get-coordinates', authenticateUser, async (req, res, next) => {
+app.post('/api/get-coordinates', async (req, res, next) => {
   try {
     // Ensure that the authenticated user is a buyer or seller
     if (req.user.type !== 'buyer' && req.user.type !== 'seller') {
@@ -208,8 +208,8 @@ app.post('/api/get-coordinates', authenticateUser, async (req, res, next) => {
 });
 
 
-// Assuming your coordinate JSON looks like: { "coordinates": [{ "lat": 12.34, "lon": 56.78 }, ...] }
-app.post('/api/array', authenticateUser, (req, res, next) => {
+
+app.post('/api/array', (req, res, next) => {
   try {
     // Ensure that the authenticated user is a buyer or seller
     if (!req.user || (req.user.type !== 'buyer' && req.user.type !== 'seller')) {
@@ -222,15 +222,23 @@ app.post('/api/array', authenticateUser, (req, res, next) => {
       return res.status(400).json({ message: 'Invalid coordinates format' });
     }
 
-    // You can now use the 'coordinates' array in your server logic
+    // Create an array of Coordinate model instances
+    const coordinatesArray = coordinates.map(coord => new Coordinate({ ...coord, item: coord.item || '' }));
 
-    res.json({ receivedCoordinates: coordinates });
+    // Save the coordinates to the database
+    Coordinate.insertMany(coordinatesArray, (err) => {
+      if (err) {
+        console.error('Error saving coordinates:', err.message);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+
+      res.json({ message: 'Coordinates added successfully' });
+    });
   } catch (error) {
     console.error('Error:', error.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
 
 
 

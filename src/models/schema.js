@@ -27,15 +27,16 @@ const orderSchema = new mongoose.Schema({
   products: [productSchema],
 });
 
-const shippingSchema = new mongoose.Schema({
-  houseNumber: { type: String, required: true },
-  streetAddress2: { type: String },
-  city: { type: String, required: true },
-  stateProvince: { type: String, required: true },
-  zipPostalCode: { type: String, required: true },
-  country: { type: String, required: true },
-  landmark: { type: String },
-  specialInstructions: { type: String },
+
+const coordinateSchema = new mongoose.Schema({
+  lat: { type: Number, required: true },
+  lon: { type: Number, required: true },
+  foodOrders: [
+    {
+      itemName: { type: String, required: true },
+      quantity: { type: Number, default: 1 },
+    }
+  ]
 });
 
 
@@ -43,7 +44,6 @@ const shippingSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Catalog = mongoose.model('Catalog', catalogSchema);
 const Order = mongoose.model('Order', orderSchema);
-const Shipping = mongoose.model('Shipping', shippingSchema);
+const Coordinate = mongoose.model('Coordinate', coordinateSchema);
 
-
-module.exports = { User, Catalog, Order, Shipping };
+module.exports = { User, Catalog, Order, Coordinate };
