@@ -23,9 +23,23 @@ const orderSchema = new mongoose.Schema({
   products: [productSchema],
 });
 
+const shippingSchema = new mongoose.Schema({
+  streetAddress1: { type: String, required: true },
+  streetAddress2: { type: String },
+  city: { type: String, required: true },
+  stateProvince: { type: String, required: true },
+  zipPostalCode: { type: String, required: true },
+  country: { type: String, required: true },
+  landmark: { type: String },
+  specialInstructions: { type: String },
+});
+
+
 // Create models
 const User = mongoose.model('User', userSchema);
 const Catalog = mongoose.model('Catalog', catalogSchema);
 const Order = mongoose.model('Order', orderSchema);
+const Shipping = mongoose.model('Shipping', shippingSchema);
+
 
 module.exports = { User, Catalog, Order };
