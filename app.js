@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { connectDB } = require("./db/connection");
 const { User, Catalog, Order,Coordinate } = require("./src/models/schema");
 const axios = require('axios');
@@ -14,6 +15,7 @@ const axiosInstance = axios.create(axiosConfig);
 
 const app = express();
 const PORT = 3000;
+app.use(cors());
 
 app.use(bodyParser.json());
 
