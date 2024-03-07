@@ -196,12 +196,7 @@ app.post('/api/array', async (req, res, next) => {
     try {
       // Use insertMany without a callback (returns a promise)
       await Coordinate.insertMany(coordinatesArray);
-
-      // Calculate the mean value for latitudes and longitudes
-      meanLatitude = coordinatesArray.reduce((sum, coord) => sum + coord.lat, 0) / coordinatesArray.length;
-      meanLongitude = coordinatesArray.reduce((sum, coord) => sum + coord.lon, 0) / coordinatesArray.length;
-
-      res.json({ message: 'Coordinates added successfully', meanLatitude, meanLongitude });
+      res.json({ message: 'Coordinates added successfully' });
     } catch (error) {
       console.error('Error saving coordinates:', error.message);
       res.status(500).json({ message: 'Internal server error' });
