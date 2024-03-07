@@ -86,6 +86,9 @@ app.get('/api/buyer/list-of-sellers', authenticateUser, async (req, res, next) =
   }
 });
 
+
+
+
 app.get('/api/buyer/seller-catalog/:seller_id',  async (req, res, next) => {
   try {
     // Ensure that the authenticated user is a buyer
@@ -105,6 +108,9 @@ app.get('/api/buyer/seller-catalog/:seller_id',  async (req, res, next) => {
     next(error);
   }
 });
+
+
+
 
 app.post('/api/buyer/create-order/:seller_id', authenticateUser, async (req, res, next) => {
   try {
@@ -141,6 +147,9 @@ app.post('/api/buyer/create-order/:seller_id', authenticateUser, async (req, res
   }
 });
 
+
+
+
 // APIs for sellers
 app.post('/api/seller/create-catalog', authenticateUser, async (req, res, next) => {
   try {
@@ -166,6 +175,8 @@ app.post('/api/seller/create-catalog', authenticateUser, async (req, res, next) 
     next(error);
   }
 });
+
+
 
 
 app.get('/api/seller/orders', authenticateUser, async (req, res, next) => {
@@ -207,17 +218,25 @@ app.post('/api/array', async (req, res, next) => {
   }
 });
 
+
 app.get('/api/fetch-coordinates', async (req, res) => {
   try {
     // Fetch all coordinates from the database
     const allCoordinates = await Coordinate.find();
 
-    res.json(allCoordinates);
+    // Extract latitude and longitude to create a new response
+    const simplifiedResponse = allCoordinates.map(({ lat, lon }) => ({ latitude: lat, longitude: lon }));
+
+    res.json(simplifiedResponse);
   } catch (error) {
     console.error('Error:', error.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
+
+
 
 app.get('/api/mean-coordinates', async (req, res) => {
   try {
